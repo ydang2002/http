@@ -33,5 +33,6 @@ class MyPainter extends CustomPainter {
   bool shouldRepaint(CustomPainter oldDelegate) {
     return false;
   }
+  //shouldRepaint xác định xem có cần vẽ lại khi có sự thay đổi hay không. Trong trường hợp này, nó trả về false, có nghĩa là không cần vẽ lại khi có thay đổi.
 }
 

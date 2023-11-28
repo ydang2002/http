@@ -2,11 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:workmanager/workmanager.dart';
 import '';
 
-sendDate() {
-  print("HIIIIIIIIIIIII");
-}
 
-const task = 'firstTask';
+const task = 'firstTask';//khởi tạo tên công việc nền
+//Hàm này được sử dụng để xử lý công việc nền khi nó được kích hoạt.
+// Trong trường hợp này, nó kiểm tra tên công việc và thực hiện một số công việc cụ thể nếu tên công việc là 'firstTask'
 void callbackDispatcher() {
   Workmanager().executeTask((taskName, inputData) {
     switch (taskName) {
@@ -21,10 +20,10 @@ void callbackDispatcher() {
 
 
 void main() {
-  WidgetsFlutterBinding.ensureInitialized();
-  Workmanager().initialize(
+  WidgetsFlutterBinding.ensureInitialized();//Đảm bảo rằng các widget đã được khởi tạo.
+  Workmanager().initialize(//khởi tạo workmanager
       callbackDispatcher,
-      isInDebugMode: true,
+      isInDebugMode: true,//Đặt chế độ debug
   );
   runApp(const MyApp());
 }
@@ -48,7 +47,8 @@ class _MyAppState extends State<MyApp> {
     );
   }
 }
-
+//Khi nút được nhấn, nó tạo một uniqueId dựa trên thời gian hiện tại và sử dụng Workmanager().registerOneOffTask(...)
+// để đăng ký một công việc nền có tên là firstTask sẽ được thực hiện sau 1 giây, với ràng buộc là chỉ khi có kết nối mạng.
 class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
@@ -56,7 +56,7 @@ class HomePage extends StatelessWidget {
         child: ElevatedButton(onPressed: () async{
           var uniqueId = DateTime.now().second.toString();
           await Workmanager().registerOneOffTask(uniqueId, task,
-            initialDelay: Duration(seconds: 10),
+            initialDelay: Duration(seconds: 1),
             constraints: Constraints(networkType: NetworkType.connected));
         }, child: Text("SHEDULE TASK")),
       ),
